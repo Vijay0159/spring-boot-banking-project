@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -31,6 +33,13 @@ public class BankController {
     public ResponseEntity<?> getAccountDetails(@RequestBody Account account, HttpServletRequest request) {
         return accountService.getAccountDetails(account.getId(), request);
     }
+
+    @GetMapping("/getAllAccounts")
+    @Operation(summary = "Fetch all account details", description = "Fetches all existing bank accounts.")
+    public ResponseEntity<?> getAllAccountDetails(HttpServletRequest request) {
+        return accountService.getAllAccountDetails(request);
+    }
+
 
     @PostMapping("/deposit")
     @Operation(summary = "Deposit amount", description = "Deposits the given amount if valid.")

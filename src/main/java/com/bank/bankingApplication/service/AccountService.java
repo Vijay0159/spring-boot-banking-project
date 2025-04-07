@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -23,6 +24,13 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     public Account createAccount(Account account) {
+        if (account.getAccountHolder() == null || account.getAccountHolder().trim().isEmpty()) {
+            throw new IllegalArgumentException("Account holder name cannot be null or empty");
+        }
+
+        if (account.getBalance() == null || account.getBalance()<=0) {
+            throw new IllegalArgumentException("Invalid Balance");
+        }
         return accountRepository.save(account);
     }
 
@@ -38,6 +46,22 @@ public class AccountService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
+
+    public ResponseEntity<?> getAllAccountDetails(HttpServletRequest request) {
+        List<Account> accounts = accountRepository.findAll();
+
+        if (accounts.isEmpty()) {
+            Map<String, Object> errorResponse = new LinkedHashMap<>();
+            errorResponse.put("message", "No accounts found.");
+            errorResponse.put("path", request.getRequestURI());
+            errorResponse.put("timestamp", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+
+        return ResponseEntity.ok(accounts);
+    }
+
+
 
     public ResponseEntity<DepositAndWithdrawResponse> deposit(DepositAndWithdrawRequest request) {
         Optional<Account> optionalAccount = accountRepository.findById(request.getId());
