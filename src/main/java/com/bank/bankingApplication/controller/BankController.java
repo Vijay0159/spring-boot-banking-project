@@ -15,12 +15,18 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/bank")
+@RequestMapping("")
 @Tag(name = "Bank Controller", description = "Handles operations related to bank accounts")
 public class BankController {
 
     @Autowired
     private AccountService accountService;
+
+    @GetMapping("/")
+    @Operation(summary = "Landing page", description = "Base page for all APIs")
+    public String dummy(HttpServletRequest request) {
+        return "Hello: " + request.getSession().getId();
+    }
 
     @PostMapping("/create")
     @Operation(summary = "Create a new bank account", description = "Creates a new account for a user.")
