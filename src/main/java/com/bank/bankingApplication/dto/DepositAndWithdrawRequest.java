@@ -1,4 +1,4 @@
-package com.bank.bankingApplication.controller;
+package com.bank.bankingApplication.dto;
 
 public class DepositAndWithdrawRequest {
     private Long id;

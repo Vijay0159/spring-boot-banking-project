@@ -1,4 +1,4 @@
-package com.bank.bankingApplication.controller;
+package com.bank.bankingApplication.dto;
 
 public class DepositAndWithdrawResponse {
     private Long id;
@@ -6,7 +6,6 @@ public class DepositAndWithdrawResponse {
     private Double balance;
     private String remarks;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
