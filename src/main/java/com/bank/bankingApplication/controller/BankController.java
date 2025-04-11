@@ -86,7 +86,7 @@ public class BankController {
         if (!isLoggedIn(request)) return unauthorizedResponse();
         return ResponseEntity.ok(accountService.createAccount(account));
     }
-
+    //changes
     @PostMapping("/getAccount")
     @Operation(summary = "Fetch account details", description = "Fetches an existing bank account using ID.")
     public ResponseEntity<?> getAccountDetails(@RequestBody Account account, HttpServletRequest request) {
